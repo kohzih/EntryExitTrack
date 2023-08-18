@@ -56,6 +56,7 @@ def extry_exit_track(data)
 
     # Excelファイルを開く
     workbook = RubyXL::Parser.parse(excel_file_path)
+    updated = false
   
     data.sort.each do |name, dates|
       # 対応する名前のシートを探す
@@ -83,15 +84,18 @@ def extry_exit_track(data)
           cell = worksheet.add_cell(row.r - 1, 6)
           cell.set_number_format('h:mm')
           cell.change_contents(DateTime.strptime(cell_date.strftime('%Y/%m/%d') + ' ' + date_value[:latest], "%Y/%m/%d %H:%M:%S"))
+
+          updated = true
         end
       end
     end
   
     # Excelファイルを上書き保存
-    workbook.write(excel_file_path)
+    workbook.write(excel_file_path) if updated
   end
 end
 
 data = read_entry_exit_csv
 output_csv(data)
 extry_exit_track(data)
+puts '正常終了'
