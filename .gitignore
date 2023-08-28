@@ -2,5 +2,6 @@
 *.xls
 *.xlsx
 *.mdb
+*.txt
 .vscode/
 bak/

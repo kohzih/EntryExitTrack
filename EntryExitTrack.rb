@@ -17,9 +17,14 @@ def read_entry_exit_csv
       data[date] ||= {}
       data[date][row['氏名']] ||= { earliest: '23:59:59', latest: '00:00:00' }
 
-      # 一番早い時刻と遅い時刻を更新
-      data[date][row['氏名']][:earliest] = [data[date][row['氏名']][:earliest], time].min
-      data[date][row['氏名']][:latest] = [data[date][row['氏名']][:latest], time].max
+      # 機器アドレスの下2桁が"02"なら入館、"03"なら退館と判断
+      if row['機器アドレス'][-2..-1] == "02"
+        # 一番早い時刻には入館時刻のみを設定
+        data[date][row['氏名']][:earliest] = [data[date][row['氏名']][:earliest], time].min
+      elsif row['機器アドレス'][-2..-1] == "03"
+        # 一番遅い時刻には退館時刻のみを設定
+        data[date][row['氏名']][:latest] = [data[date][row['氏名']][:latest], time].max
+      end
     end
   end
 
