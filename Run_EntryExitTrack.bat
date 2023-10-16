@@ -1,5 +1,5 @@
-REM 縺薙�ｮ繝舌ャ繝√ヵ繧｡繧､繝ｫ縺ｯ縲・ntryExitTrack.rb Ruby繧ｹ繧ｯ繝ｪ繝励ヨ繧貞ｮ溯｡後＠縲∫樟蝨ｨ縺ｮ譌･莉倥→譎ょ綾縺後ヵ繧｡繧､繝ｫ蜷阪↓霑ｽ蜉縺輔ｌ縺溘ヵ繧｡繧､繝ｫ縺ｫ蜃ｺ蜉帙ｒ繝ｭ繧ｰ縺励∪縺吶�
+REM このバッチファイルは、EntryExitTrack.rb Rubyスクリプトを実行し、現在の日付と時刻がファイル名に追加されたファイルに出力をログします。
 @echo off
 for /f "delims=" %%a in ('wmic OS Get localdatetime ^| find "."') do set datetime=%%a
-set datetime=%datetime:~0,4%%datetime:~4,2%%datetime:~6,2%%datetime:~8,2%%datetime:~10,2%%datetime:~12,2%
+set datetime=%datetime:~0,4%%datetime:~4,2%%datetime:~6,2%_%datetime:~8,2%%datetime:~10,2%%datetime:~12,2%
 ruby EntryExitTrack.rb >> log_%datetime%.txt 2>&1
